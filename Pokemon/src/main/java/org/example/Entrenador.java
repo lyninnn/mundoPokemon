@@ -33,6 +33,12 @@ public class Entrenador {
     private ArrayList<Objeto> objetos;
 
 
+    @ManyToMany
+    @JoinTable(name = "medallas_entrenadores",
+                joinColumns = {@JoinColumn(name = "idEntrenador")},
+                inverseJoinColumns = {@JoinColumn(name = "idMedalla")})
+    private ArrayList<Medalla> medallas;
+
     public Entrenador() {
 
     }
@@ -43,6 +49,7 @@ public class Entrenador {
         this.fechaNacimiento = fechaNacimiento;
         this.pokemon = pokemon;
         objetos = new ArrayList<>();
+        medallas= new ArrayList<>();
     }
 
     public int getId() {
@@ -81,6 +88,7 @@ public class Entrenador {
         return pokemon;
     }
 
+
     public void setPokemon(Pokemon pokemon) {
         this.pokemon = pokemon;
     }
@@ -91,7 +99,10 @@ public class Entrenador {
     public void setObjeto(ArrayList<Objeto> objeto) {
         this.objetos = objeto;
     }
-
+    public void addObjeto(Objeto objeto){
+        this.objetos.add(objeto);
+        objeto.setEntrenador(this);
+    }
 
     @Override
     public String toString() {

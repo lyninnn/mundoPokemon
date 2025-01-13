@@ -1,0 +1,30 @@
+drop database if exists mundoPokemon;
+create database if not exists mundoPokemon;
+
+use mundoPokemon;
+
+create table pokemons (idPokemon int auto_increment primary key, 
+		     nombre varchar(50), 
+		     tipo1 enum ('roca', 'electrico', 'fuego', 'agua', 'planta' ), 
+		     tipo2 enum (' ', 'roca', 'electrico', 'fuego', 'agua', 'planta' ) );
+
+create table entrenadores (id int auto_increment primary key, 
+							nombre varchar(50), 
+							idPokemon int, 
+                            ciudad varchar(25),
+                            fechaNac date,
+                            foreign key (idPokemon) references pokemons(idPokemon));
+
+
+create table objetos (id int auto_increment primary key, 
+					  nombre varchar(50), 
+                      cantidad int, idEntrenador int,
+                      foreign key (idEntrenador) references entrenadores(id));
+                      
+                      
+create table medallas (id int auto_increment primary key, nombre varchar(50), lider varchar(50));
+
+create table medallas_entrenadores(idEntrenador int , idMedalla int, 
+								   primary key(idEntrenador, idMedalla),
+								   foreign key (idEntrenador) references entrenadores(id),
+                                   foreign key (idMedalla) references medallas(id));
