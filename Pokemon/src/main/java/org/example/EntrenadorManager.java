@@ -61,8 +61,8 @@ public class EntrenadorManager {
         TypedQuery<Entrenador> query =
                 manager.createQuery("FROM Entrenador where nombre = :nombre", Entrenador.class);
         query.setParameter("nombre", name);
-        Entrenador e  = query.getSingleResult();
-      //Entrenador e = query.getResultList().stream().findFirst().orElse(null);
+        Entrenador e  = query.getSingleResult();//Si existe más de uno en la BBDD da error
+      //Entrenador e = query.getResultList().stream().findFirst().orElse(null);//LIMIT 1
         manager.getTransaction().commit();
         manager.close();
         return e;

@@ -2,6 +2,8 @@ package org.example;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="pokemons")
@@ -27,14 +29,19 @@ public class Pokemon {
     @OneToOne(mappedBy = "pokemon")
     private Entrenador entrenador;
 
+
+    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<HistorialPokemon> historial;
+
+
     public Pokemon() {
     }
 
-    public Pokemon(String nombre, TIPO1 tipo1, TIPO1 tipo2, Entrenador entrenador) {
+    public Pokemon(String nombre, TIPO1 tipo1, TIPO1 tipo2) {
         this.nombre = nombre;
         this.tipo1 = tipo1;
         this.tipo2 = tipo2;
-        this.entrenador = entrenador;
+        this.historial = new ArrayList<>();
     }
 
     public int getId() {
@@ -75,6 +82,14 @@ public class Pokemon {
 
     public void setEntrenador(Entrenador entrenador) {
         this.entrenador = entrenador;
+    }
+
+    public List<HistorialPokemon> getHistorial() {
+        return historial;
+    }
+
+    public void setHistorial(ArrayList<HistorialPokemon> historial) {
+        this.historial = historial;
     }
 
     @Override
